@@ -16,18 +16,21 @@ st.write('---')
 
 index = st.selectbox("Select Player", range(len(player_name)), format_func=lambda x: player_name[x])
 
-# Player Data from Forms
+# Player data from forms
 player_name = player_info.iat[index, 0]
 player_team = player_info.iat[index, 1]
 player_skills = player_info.iat[index, 2]
 
+# Display player info
+co1, co2 = st.columns([1, 2])
+co1.image('sachin.jpg')
+co2.header(player_name)
+
 col1, col2, col3 = st.columns(3)
-col1.subheader(player_name)
 col2.subheader(player_team)
 col3.subheader(player_skills)
 
-
-# Submit Details
+# Submit player auction details
 st.form("Player Auction Details", clear_on_submit=True)
 with st.form(key='player_team_form'):
     team_name = st.selectbox('Team', team_name_list)
