@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas as pd
 
 # Team Data Import
 team = open("team_names.txt", "r")
@@ -7,19 +8,30 @@ team_name_list = team_names.split("\n")
 team.close()
 
 # Player Data Import
-player_name = ["Sachin Tendulkar", "Rahul Dravid", "Virat Kohli"]
-player = st.selectbox("Select Player", player_name)
+player_info = pd.read_csv("player_details.csv")
+player_name = player_info["Player Name"]
+st.subheader("All Players List")
+st.write(player_info)
+st.write('---')
 
-st.header('Player Details')
+index = st.selectbox("Select Player", range(len(player_name)), format_func=lambda x: player_name[x])
+
+# Player Data from Forms
+player_name = player_info.iat[index, 0]
+player_team = player_info.iat[index, 1]
+player_skills = player_info.iat[index, 2]
+
 col1, col2, col3 = st.columns(3)
-col1.subheader(player)
-col2.subheader("Mumbai Indians")
-col3.subheader("Batsman")
+col1.subheader(player_name)
+col2.subheader(player_team)
+col3.subheader(player_skills)
 
 
 # Submit Details
-st.form("Player Auction Details")
+st.form("Player Auction Details", clear_on_submit=True)
 with st.form(key='player_team_form'):
     team_name = st.selectbox('Team', team_name_list)
     amount = st.number_input('Amount', 1000, 100000)
-    st.form_submit_button('Submit')
+    submitted = st.form_submit_button('Submit')
+    if submitted:
+        st.balloons()
