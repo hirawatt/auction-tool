@@ -4,17 +4,17 @@ import pandas as pd
 # Event Logos
 c1, c2, c3 = st.columns(3)
 c1.image("./event-img/jito-1.png")
-c2.image("event-img/jpl-logo.png")
-c3.image("event-img/jito-3.png")
+c2.image("./event-img/jpl-logo.png")
+c3.image("./event-img/jito-3.png")
 
 # Team Data Import
-team = open("team_names.txt", "r")
+team = open("./data/team_names.txt", "r")
 team_names = team.read()
 team_name_list = team_names.split("\n")
 team.close()
 
 # Player Data Import
-player_info = pd.read_csv("jito-4-team-list.csv")
+player_info = pd.read_csv("./data/jito-4-team-list.csv")
 player_name = player_info["Name"]
 #st.subheader("All Players List")
 #st.write(player_info)
@@ -60,10 +60,19 @@ with st.form(key='player_team_form'):
 import requests
 import pandas as pd
 
+# Parse URL
+from urllib.parse import urlparse
+
 image_url = "https://drive.google.com/open?id=1a_MTMISVup-7c22tpmnrRolp4z8TP7RO"
+link = urlparse(image_url)
+st.write(link.query)
+new_url = "https://drive.google.com/file/d/{}/".format(link.query)
+st.write(new_url)
 
-
-r = requests.get(image_url)
+r = requests.get(new_url)
 #st.write(r.content)
-#df = pd.read_html(r.text)
-#st.markdown(df)
+import gdown
+
+id = link.query
+output = "./img/{}.jpeg".format(player_name[0:4])
+gdown.download(url=image_url, output=output, quiet=False)
