@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from drive_image import download_file_from_google_drive
 
 # Event Logos
 c1, c2, c3 = st.columns(3)
@@ -56,3 +57,8 @@ with st.form(key='player_team_form'):
     submitted = st.form_submit_button('Submit')
     if submitted:
         st.balloons()
+
+# Built By
+with st.sidebar:
+    st.header("Made with ❤️ by [Vishal Hirawat](https://hirawat.in)")
+    st.image("./hirawat-tech-500-logo.png")
