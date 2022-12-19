@@ -56,23 +56,3 @@ with st.form(key='player_team_form'):
     submitted = st.form_submit_button('Submit')
     if submitted:
         st.balloons()
-
-import requests
-import pandas as pd
-
-# Parse URL
-from urllib.parse import urlparse
-
-image_url = "https://drive.google.com/open?id=1a_MTMISVup-7c22tpmnrRolp4z8TP7RO"
-link = urlparse(image_url)
-st.write(link.query)
-new_url = "https://drive.google.com/file/d/{}/".format(link.query)
-st.write(new_url)
-
-r = requests.get(new_url)
-#st.write(r.content)
-import gdown
-
-id = link.query
-output = "./img/{}.jpeg".format(player_name[0:4])
-gdown.download(url=image_url, output=output, quiet=False)
