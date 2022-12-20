@@ -23,9 +23,8 @@ team.close()
 # Player Data Import
 player_info = pd.read_csv("./data/jito-4-team-list.csv")
 player_name_all = player_info["Name"]
-#st.subheader("All Players List")
-#st.write(player_info)
-#st.write('---')
+with st.expander("All Players List"):
+    st.write(player_info.iloc[:, [1, 3, 8, 9, 10, 11]])
 
 index = st.selectbox("Select Player", range(len(player_name_all)), format_func=lambda x: player_name_all[x])
 
@@ -75,6 +74,7 @@ with st.form(key='player_team_form'):
     amount = st.number_input('Amount', 1000, 100000)
     submitted = st.form_submit_button('Submit')
     if submitted:
+        print(player_info.append())
         st.balloons()
 
 # Built By
