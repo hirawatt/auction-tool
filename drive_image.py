@@ -1,4 +1,6 @@
 import requests
+from urllib.parse import urlparse
+import pandas as pd
 
 def download_file_from_google_drive(id, destination):
     URL = "https://docs.google.com/uc?export=download"
@@ -30,6 +32,14 @@ def save_response_content(response, destination):
                 f.write(chunk)
 
 if __name__ == "__main__":
-    file_id = '1a_MTMISVup-7c22tpmnrRolp4z8TP7RO'
-    destination = '{}{}.jpg'.format()
-    download_file_from_google_drive(file_id, destination)
+
+    player_info = pd.read_csv("./data/jito-4-team-list.csv")
+    player_name_all = player_info["Name"]
+    for index in range(len(player_name_all)):
+        player_name = player_info.iat[index, 1]
+        player_image = player_info.iat[index, 14]
+        
+        link = urlparse(player_image)
+        image_id = link.query[3:]
+        destination = './img/{}-{}.jpg'.format(index, player_name)
+        download_file_from_google_drive(image_id, destination)

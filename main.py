@@ -2,6 +2,12 @@ import streamlit as st
 import pandas as pd
 from drive_image import download_file_from_google_drive
 
+st.set_page_config(
+    "Auction Platform",
+    "💰",
+    initial_sidebar_state="collapsed",
+    layout="centered",
+)
 # Event Logos
 c1, c2, c3 = st.columns(3)
 c1.image("./event-img/jito-1.png")
@@ -16,12 +22,12 @@ team.close()
 
 # Player Data Import
 player_info = pd.read_csv("./data/jito-4-team-list.csv")
-player_name = player_info["Name"]
+player_name_all = player_info["Name"]
 #st.subheader("All Players List")
 #st.write(player_info)
 #st.write('---')
 
-index = st.selectbox("Select Player", range(len(player_name)), format_func=lambda x: player_name[x])
+index = st.selectbox("Select Player", range(len(player_name_all)), format_func=lambda x: player_name_all[x])
 
 # Player data from forms
 player_name = player_info.iat[index, 1]
@@ -39,10 +45,23 @@ else:
     st.error("Not Played Before")
 
 
-co1, co2, co3 = st.columns([1, 2, 1])
-co1.image(player_image)
-co2.header(player_name)
-co3.header(player_age)
+# Parse URL
+from urllib.parse import urlparse
+
+link = urlparse(player_image)
+image_id = link.query[3:]
+
+# Download all image files
+destination = './img/{}-{}.jpg'.format(index, player_name)
+
+# Run this line only once
+#download_file_from_google_drive(image_id, destination)
+
+co1, co2, co3, co4 = st.columns([1, 1, 2, 1])
+co1.image(destination)
+co2.write("")
+co3.header(player_name)
+co4.header(player_age)
 
 col1, col2, col3 = st.columns(3)
 col1.subheader(player_specialist)
@@ -59,6 +78,9 @@ with st.form(key='player_team_form'):
         st.balloons()
 
 # Built By
+
+st.markdown('<div style="text-align: center">Made with ❤️ by <a href="https://tech.hirawat.in">Vishal Hirawat</a></div>', unsafe_allow_html=True)
+
 with st.sidebar:
     st.header("Made with ❤️ by [Vishal Hirawat](https://hirawat.in)")
     st.image("./hirawat-tech-500-logo.png")
