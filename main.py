@@ -59,7 +59,7 @@ destination = './img/{}-{}.jpg'.format(index, player_name)
 
 co1, co2, co3, co4 = st.columns([1, 1, 2, 1])
 co1.image(destination)
-co2.write("")
+co2.write("Category")
 co3.header(player_name)
 co4.header(player_age)
 
@@ -79,7 +79,7 @@ with st.form(key='player_team_form'):
 
 # Built By
 
-st.markdown('<div style="text-align: center">Made with ❤️ by <a href="https://tech.hirawat.in">Vishal Hirawat</a></div>', unsafe_allow_html=True)
+st.markdown('<div style="text-align: center">Made with ❤️ by <a href="https://hirawat.in">Vishal Hirawat</a></div>', unsafe_allow_html=True)
 
 with st.sidebar:
     st.header("Made with ❤️ by [Vishal Hirawat](https://hirawat.in)")
